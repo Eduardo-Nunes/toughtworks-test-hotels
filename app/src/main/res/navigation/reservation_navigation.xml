@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/reservation_navigation"
+    app:startDestination="@id/checkInOuFragment">
+    <fragment
+        android:id="@+id/checkInOuFragment"
+        android:name="com.thoughtworks.android_test_project.view.CheckInOutFragment"
+        android:label="Check In-Out Fragment"
+        tools:layout="@layout/fragment_check_in_out">
+        <action
+            android:id="@+id/action_checkInOuFragment_to_hotelResultFragment2"
+            app:popUpTo="@layout/fragment_check_in_out"
+            app:destination="@id/hotelResultFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/hotelResultFragment2"
+        android:name="com.thoughtworks.android_test_project.view.HotelResultFragment"
+        android:label="Hotel Result Fragmnet"
+        tools:layout="@layout/hotel_result_fragment" />
+</navigation>
