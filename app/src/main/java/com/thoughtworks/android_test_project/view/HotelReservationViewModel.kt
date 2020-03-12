@@ -7,7 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.thoughtworks.android_test_project.R
 import com.thoughtworks.android_test_project.domain.core.ReservationsUseCase
 import com.thoughtworks.android_test_project.domain.models.Reservation
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.launch
 import org.joda.time.DateTime
 
 class HotelReservationViewModel(
@@ -24,9 +27,7 @@ class HotelReservationViewModel(
     }
 
     fun findBestHotels(startDate: DateTime, endDate: DateTime, isRewardClient: Boolean) {
-        validateDates(startDate, endDate)?.run {
-            return@run messageData.postValue(this)
-        }
+        if (!validateDates(startDate, endDate)) return
 
         backgroundScope.launch {
             messageData.postValue(context.getString(R.string.loading_message))
@@ -34,25 +35,29 @@ class HotelReservationViewModel(
         }
     }
 
-    private suspend fun bestReservationCallback(reservation: Reservation) {
-        delay(context.resources.getInteger(android.R.integer.config_longAnimTime).toLong())
+    private fun bestReservationCallback(reservation: Reservation) {
         reservationData.postValue(reservation)
         messageData.postValue(null)
     }
 
-    private fun validateDates(startDate: DateTime, endDate: DateTime): String? {
+    private fun validateDates(startDate: DateTime, endDate: DateTime): Boolean {
         return when {
             startDate.isBeforeNow || endDate.isBeforeNow -> {
-                context.getString(
-                    R.string.start_date_error_message
+                messageData.postValue(
+                    context.getString(R.string.start_date_error_message)
                 )
+                false
             }
             endDate.isBefore(startDate) -> {
-                context.getString(
-                    R.string.start_date_error_message
+                messageData.postValue(
+                    context.getString(R.string.wrong_range_error_message)
                 )
+                false
             }
-            else -> null
+            else -> {
+                messageData.postValue(null)
+                true
+            }
         }
     }
 

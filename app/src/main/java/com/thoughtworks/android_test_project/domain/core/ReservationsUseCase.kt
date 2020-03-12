@@ -2,16 +2,15 @@ package com.thoughtworks.android_test_project.domain.core
 
 import androidx.annotation.VisibleForTesting
 import com.thoughtworks.android_test_project.data.interfaces.RewardsVocation
-import com.thoughtworks.android_test_project.data.models.Hotel
 import com.thoughtworks.android_test_project.domain.models.Reservation
 import com.thoughtworks.android_test_project.extensions.isWeekendDay
 import org.joda.time.DateTime
 import org.joda.time.Days
 import java.lang.reflect.Modifier.PRIVATE
 
-class ReservationsUseCase(repository: HotelsRepository) {
+open class ReservationsUseCase(private val repository: HotelsRepository) {
 
-    operator fun invoke(
+    suspend operator fun invoke(
         startDate: DateTime,
         endDate: DateTime,
         isReward: Boolean
@@ -19,11 +18,7 @@ class ReservationsUseCase(repository: HotelsRepository) {
         return getBestReservation(startDate, endDate, isReward)
     }
 
-    private val hotelsList: List<Hotel> by lazy {
-        repository.listHotels()
-    }
-
-    private fun getBestReservation(
+    private suspend fun getBestReservation(
         startDate: DateTime,
         endDate: DateTime,
         isReward: Boolean
@@ -58,12 +53,14 @@ class ReservationsUseCase(repository: HotelsRepository) {
         return allDrawedOptions.first()
     }
 
-    private fun getReservationsOptions(
+    private suspend fun getReservationsOptions(
         startDate: DateTime,
         endDate: DateTime,
         isReward: Boolean
-    ): List<Reservation> =
-        hotelsList.map { hotel ->
+    ): List<Reservation> {
+        val hotelsList = repository.listHotels()
+
+        return hotelsList.map { hotel ->
             Reservation(
                 hotelName = hotel.name,
                 stars = hotel.stars,
@@ -77,6 +74,8 @@ class ReservationsUseCase(repository: HotelsRepository) {
                 )
             )
         }
+    }
+
 
     private fun getReservationTotalPrice(
         hotel: RewardsVocation,

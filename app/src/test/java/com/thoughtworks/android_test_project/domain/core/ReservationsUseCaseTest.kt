@@ -2,6 +2,7 @@ package com.thoughtworks.android_test_project.domain.core
 
 import android.app.Application
 import com.thoughtworks.android_test_project.extensions.toSimpleDateTime
+import kotlinx.coroutines.runBlocking
 import org.joda.time.DateTime
 import org.joda.time.DateTimeUtils
 import org.junit.After
@@ -44,12 +45,12 @@ class ReservationsUseCaseTest {
     }
 
     @Test
-    fun getBestReservation_ENTRADA_1() {
+    fun getBestReservation_ENTRADA_1() = runBlocking {
 
         val start = "16/03/2020".toSimpleDateTime()
         val end = "18/03/2020".toSimpleDateTime()
 
-        val bestOffer = useCaseTest.invoke(
+        val bestOffer = useCaseTest.get(
             start, end,
             isReward = false
         )
@@ -59,12 +60,12 @@ class ReservationsUseCaseTest {
 
 
     @Test
-    fun getBestReservation_ENTRADA_2() {
+    fun getBestReservation_ENTRADA_2() = runBlocking {
 
         val start = "20/03/2020".toSimpleDateTime()
         val end = "22/03/2020".toSimpleDateTime()
 
-        val bestOffer = useCaseTest.invoke(
+        val bestOffer = useCaseTest.get(
             start, end,
             isReward = false
         )
@@ -73,12 +74,12 @@ class ReservationsUseCaseTest {
     }
 
     @Test
-    fun getBestReservation_ENTRADA_3() {
+    fun getBestReservation_ENTRADA_3() = runBlocking {
 
         val start = "26/03/2020".toSimpleDateTime()
         val end = "28/03/2020".toSimpleDateTime()
 
-        val bestOffer = useCaseTest.invoke(
+        val bestOffer = useCaseTest.get(
             start, end,
             isReward = true
         )

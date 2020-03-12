@@ -1,11 +1,10 @@
 package com.thoughtworks.android_test_project.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.Fragment
 import com.thoughtworks.android_test_project.R
 import kotlinx.android.synthetic.main.hotel_result_fragment.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -36,7 +35,7 @@ class HotelResultFragment : Fragment() {
     }
 
     private fun initData() {
-        textView.text = viewModel.test.toString()
+//        textView.text = viewModel.test.toString()
     }
 
 
