@@ -1,21 +1,18 @@
 package com.thoughtworks.android_test_project.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-
 import com.thoughtworks.android_test_project.R
 import kotlinx.android.synthetic.main.fragment_check_in_out.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class CheckInOutFragment : Fragment() {
 
-    private val viewModel: HotelReservationViewModel by lazy {
-        ViewModelProviders.of(requireActivity()).get(HotelReservationViewModel::class.java)
-    }
+    private val viewModel: HotelReservationViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

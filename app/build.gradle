@@ -36,6 +36,10 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:2.2.1"
     implementation "androidx.fragment:fragment-ktx:1.2.2"
 
+    implementation "org.koin:koin-android:2.0.1"
+    implementation "org.koin:koin-androidx-viewmodel:2.0.1"
+    implementation "org.koin:koin-core:2.0.1"
+
     implementation 'net.danlew:android.joda:2.10.3'
 
     testImplementation 'junit:junit:4.12'

@@ -8,12 +8,11 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
 import com.thoughtworks.android_test_project.R
 import kotlinx.android.synthetic.main.hotel_result_fragment.*
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HotelResultFragment : Fragment() {
 
-    private val viewModel: HotelReservationViewModel by lazy {
-        ViewModelProviders.of(requireActivity()).get(HotelReservationViewModel::class.java)
-    }
+    private val viewModel: HotelReservationViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
