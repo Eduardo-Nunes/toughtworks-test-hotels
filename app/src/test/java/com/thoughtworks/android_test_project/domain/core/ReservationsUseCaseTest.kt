@@ -1,8 +1,7 @@
 package com.thoughtworks.android_test_project.domain.core
 
 import android.app.Application
-import com.thoughtworks.android_test_project.view.toSimpleDateTime
-import net.danlew.android.joda.JodaTimeAndroid
+import com.thoughtworks.android_test_project.extensions.toSimpleDateTime
 import org.joda.time.DateTime
 import org.joda.time.DateTimeUtils
 import org.junit.After

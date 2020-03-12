@@ -1,4 +1,4 @@
-package com.thoughtworks.android_test_project.view
+package com.thoughtworks.android_test_project.extensions
 
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
