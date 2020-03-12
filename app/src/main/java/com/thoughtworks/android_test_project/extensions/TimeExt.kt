@@ -35,3 +35,8 @@ fun DateTime.endOfDay(): DateTime {
         .withSecondOfMinute(END_MIN_SEC_DAY)
         .withMillisOfSecond(END_MILLISECOND_DAY)
 }
+
+fun DateTime.toSimpleDatePattern(): String {
+    val formatter = DateTimeFormat.forPattern(SIMPLE_DATE_PATTERN)
+    return this.toString(formatter)
+}

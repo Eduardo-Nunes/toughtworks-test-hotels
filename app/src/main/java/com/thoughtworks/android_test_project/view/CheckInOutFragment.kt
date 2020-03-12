@@ -30,8 +30,8 @@ class CheckInOutFragment : Fragment() {
     }
 
     private fun initViews() {
-        checkInCalendarView.date = viewModel.startDate.millis
-        checkOutCalendarView.date = viewModel.endDate.millis
+        checkInCalendarView.setDate(viewModel.startDate.millis, true, true)
+        checkOutCalendarView.setDate(viewModel.endDate.millis, true, true)
         rewardSwitch.isChecked = viewModel.isRewardClient
     }
 
@@ -55,7 +55,6 @@ class CheckInOutFragment : Fragment() {
     }
 
     private fun initData() {
-//        viewModel.clear()
         viewModel.messageData.observe(viewLifecycleOwner, Observer(::bindMessage))
         viewModel.enableFindButton.observe(viewLifecycleOwner, Observer(::enableFindButton))
     }
