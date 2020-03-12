@@ -97,11 +97,11 @@ class HotelReservationViewModelTest {
     @Test
     fun findBestHotels_ERROR_START_BEFORE_NOW() = runBlockingTest {
 
-        viewModel.findBestHotels(
-            "10/03/2020".toSimpleDateTime(),
-            "11/03/2020".toSimpleDateTime(),
-            false
-        )
+        viewModel.validateStartDate(10, 2, 2020)
+        viewModel.validateEndDate(11, 2, 2020)
+        viewModel.isRewardClient = false
+
+        viewModel.findBestHotels()
 
         verify(messageDataTest, atLeastOnce()).onChanged("datas anteriores a hoje")
     }
@@ -109,11 +109,11 @@ class HotelReservationViewModelTest {
     @Test
     fun findBestHotels_ERROR_END_BEFORE_NOW() = runBlockingTest {
 
-        viewModel.findBestHotels(
-            "11/03/2020".toSimpleDateTime(),
-            "10/03/2020".toSimpleDateTime(),
-            false
-        )
+        viewModel.validateStartDate(11, 2, 2020)
+        viewModel.validateEndDate(10, 2, 2020)
+        viewModel.isRewardClient = false
+
+        viewModel.findBestHotels()
 
         verify(messageDataTest, atLeast(1)).onChanged("datas anteriores a hoje")
     }
@@ -121,11 +121,11 @@ class HotelReservationViewModelTest {
     @Test
     fun findBestHotels_ERROR_END_BEFORE_START() = runBlockingTest {
 
-        viewModel.findBestHotels(
-            "12/03/2020".toSimpleDateTime(),
-            "11/03/2020".toSimpleDateTime(),
-            false
-        )
+        viewModel.validateStartDate(18, 2, 2020)
+        viewModel.validateEndDate(15, 2, 2020)
+        viewModel.isRewardClient = false
+
+        viewModel.findBestHotels()
 
         verify(messageDataTest, atLeast(1)).onChanged("data final errada")
 
@@ -134,13 +134,14 @@ class HotelReservationViewModelTest {
     @Test
     fun findBestHotels_SUCCESS() = runBlockingTest {
 
-        viewModel.findBestHotels(
-            "16/03/2020".toSimpleDateTime(),
-            "18/03/2020".toSimpleDateTime(),
-            false
-        )
 
-        verify(useCase).invoke(
+        viewModel.validateStartDate(16, 2, 2020)
+        viewModel.validateEndDate(18, 2, 2020)
+        viewModel.isRewardClient = false
+
+        viewModel.findBestHotels()
+
+        verify(useCase)(
             "16/03/2020".toSimpleDateTime(),
             "18/03/2020".toSimpleDateTime(),
             false
