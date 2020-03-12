@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        mainRootNavigation.findNavController().popBackStack()
+        if(!mainRootNavigation.findNavController().popBackStack()){
+            super.onBackPressed()
+        }
     }
 }
