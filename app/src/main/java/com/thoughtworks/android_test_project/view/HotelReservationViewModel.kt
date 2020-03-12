@@ -7,6 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.thoughtworks.android_test_project.R
 import com.thoughtworks.android_test_project.domain.core.ReservationsUseCase
 import com.thoughtworks.android_test_project.domain.models.Reservation
+import com.thoughtworks.android_test_project.extensions.endOfDay
+import com.thoughtworks.android_test_project.extensions.startOfDay
+import com.thoughtworks.android_test_project.extensions.toSimpleDateTime
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancelChildren
@@ -19,16 +22,19 @@ class HotelReservationViewModel(
 ) :
     AndroidViewModel(context) {
 
+    private val today = DateTime().startOfDay()
+    var endDate: DateTime = today
+    var startDate: DateTime = today
+    var isRewardClient: Boolean = false
     val reservationData: MutableLiveData<Reservation?> = MutableLiveData()
     val messageData: MutableLiveData<String?> = MutableLiveData()
+    val enableFindButton: MutableLiveData<Boolean> = MutableLiveData(false)
 
     private val backgroundScope by lazy {
         CoroutineScope(viewModelScope.coroutineContext + Dispatchers.IO)
     }
 
-    fun findBestHotels(startDate: DateTime, endDate: DateTime, isRewardClient: Boolean) {
-        if (!validateDates(startDate, endDate)) return
-
+    fun findBestHotels() {
         backgroundScope.launch {
             messageData.postValue(context.getString(R.string.loading_message))
             bestReservationCallback(reservationsUseCase(startDate, endDate, isRewardClient))
@@ -40,23 +46,39 @@ class HotelReservationViewModel(
         messageData.postValue(null)
     }
 
-    private fun validateDates(startDate: DateTime, endDate: DateTime): Boolean {
+    fun validateStartDate(day: Int, month: Int, year: Int) {
+        this.startDate = parseDateTime(day, month, year).startOfDay()
+        validateDates()
+    }
+
+    fun validateEndDate(day: Int, month: Int, year: Int) {
+        this.endDate = parseDateTime(day, month, year).endOfDay()
+        validateDates()
+    }
+
+    private fun parseDateTime(day: Int, month: Int, year: Int): DateTime {
+        return "$day/${month + 1}/$year".toSimpleDateTime()
+    }
+
+    private fun validateDates() {
+        val startValidDate = today.plusDays(1)
+
         return when {
-            startDate.isBeforeNow || endDate.isBeforeNow -> {
+            startDate.isBefore(startValidDate) || endDate.isBefore(startValidDate) -> {
                 messageData.postValue(
                     context.getString(R.string.start_date_error_message)
                 )
-                false
+                enableFindButton.postValue(false)
             }
             endDate.isBefore(startDate) -> {
                 messageData.postValue(
                     context.getString(R.string.wrong_range_error_message)
                 )
-                false
+                enableFindButton.postValue(false)
             }
             else -> {
                 messageData.postValue(null)
-                true
+                enableFindButton.postValue(true)
             }
         }
     }

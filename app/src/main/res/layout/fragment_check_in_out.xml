@@ -32,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/checkInTextView"
+            android:tag="@string/check_in_label"
             app:layout_constraintBottom_toTopOf="@+id/checkOutTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,12 +55,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/checkOutTextView"
+            android:tag="@string/check_out_label"
             app:layout_constraintBottom_toTopOf="@+id/rewardSwitch"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkOutTextView" />
 
-        <Switch
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/rewardSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -71,7 +73,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/checkOutCalendarView" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/bestPricesButton"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
