@@ -4,12 +4,10 @@ import androidx.annotation.VisibleForTesting
 import com.thoughtworks.android_test_project.data.interfaces.RewardsVocation
 import com.thoughtworks.android_test_project.data.models.Hotel
 import com.thoughtworks.android_test_project.domain.models.Reservation
+import com.thoughtworks.android_test_project.extensions.isWeekendDay
 import org.joda.time.DateTime
 import org.joda.time.Days
 import java.lang.reflect.Modifier.PRIVATE
-
-private const val SATURDAY_JODA_DAY_OFF_WEEK = 6
-private const val SUNDAY_JODA_DAY_OFF_WEEK = 7
 
 class ReservationsUseCase(repository: HotelsRepository) {
 
@@ -80,7 +78,7 @@ class ReservationsUseCase(repository: HotelsRepository) {
         var totalPrice = 0f
 
         dates.forEach { day ->
-            val sumPrice = if (isWeekendDay(day)) {
+            val sumPrice = if (day.isWeekendDay()) {
                 hotel.getWeekendPrice(isReward)
             } else {
                 hotel.getDayPrice(isReward)
@@ -90,13 +88,6 @@ class ReservationsUseCase(repository: HotelsRepository) {
         }
 
         return totalPrice
-    }
-
-    private fun isWeekendDay(day: DateTime): Boolean {
-        return when (day.dayOfWeek) {
-            SUNDAY_JODA_DAY_OFF_WEEK, SATURDAY_JODA_DAY_OFF_WEEK -> true
-            else -> false
-        }
     }
 
     @VisibleForTesting(otherwise = PRIVATE)
