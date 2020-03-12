@@ -27,7 +27,7 @@ class CheckInOutFragment : Fragment() {
     }
 
     private fun initListeners() {
-        bestPricesButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_checkInOuFragment_to_hotelResultFragment2))
+        bestPricesButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_checkInOuFragment_to_hotelResultFragment))
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
