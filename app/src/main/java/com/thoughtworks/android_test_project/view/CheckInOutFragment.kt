@@ -36,6 +36,6 @@ class CheckInOutFragment : Fragment() {
     }
 
     private fun initData() {
-        viewModel.test = 10
+        viewModel.clear()
     }
 }

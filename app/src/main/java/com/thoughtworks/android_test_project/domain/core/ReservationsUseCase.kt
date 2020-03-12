@@ -11,11 +11,19 @@ import java.lang.reflect.Modifier.PRIVATE
 
 class ReservationsUseCase(repository: HotelsRepository) {
 
+    operator fun invoke(
+        startDate: DateTime,
+        endDate: DateTime,
+        isReward: Boolean
+    ): Reservation {
+        return getBestReservation(startDate, endDate, isReward)
+    }
+
     private val hotelsList: List<Hotel> by lazy {
         repository.listHotels()
     }
 
-    fun getBestReservation(
+    private fun getBestReservation(
         startDate: DateTime,
         endDate: DateTime,
         isReward: Boolean

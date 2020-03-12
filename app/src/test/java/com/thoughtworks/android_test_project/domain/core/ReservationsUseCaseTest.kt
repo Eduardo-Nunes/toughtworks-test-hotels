@@ -49,7 +49,7 @@ class ReservationsUseCaseTest {
         val start = "16/03/2020".toSimpleDateTime()
         val end = "18/03/2020".toSimpleDateTime()
 
-        val bestOffer = useCaseTest.getBestReservation(
+        val bestOffer = useCaseTest.invoke(
             start, end,
             isReward = false
         )
@@ -64,7 +64,7 @@ class ReservationsUseCaseTest {
         val start = "20/03/2020".toSimpleDateTime()
         val end = "22/03/2020".toSimpleDateTime()
 
-        val bestOffer = useCaseTest.getBestReservation(
+        val bestOffer = useCaseTest.invoke(
             start, end,
             isReward = false
         )
@@ -78,7 +78,7 @@ class ReservationsUseCaseTest {
         val start = "26/03/2020".toSimpleDateTime()
         val end = "28/03/2020".toSimpleDateTime()
 
-        val bestOffer = useCaseTest.getBestReservation(
+        val bestOffer = useCaseTest.invoke(
             start, end,
             isReward = true
         )
